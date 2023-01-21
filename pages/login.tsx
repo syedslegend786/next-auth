@@ -1,6 +1,6 @@
 import React from 'react'
 import { GetServerSideProps } from 'next'
-import { getProviders, signIn } from 'next-auth/react'
+import { getProviders, signIn, getSession } from 'next-auth/react'
 const Login = ({ providers }: { providers: any }) => {
     console.log(providers)
     return (
@@ -24,7 +24,15 @@ export default Login
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const providers = await getProviders()
-
+    const sessions = await getSession(ctx)
+    if (sessions) {
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false
+            }
+        }
+    }
     return {
         props: {
             providers: providers
