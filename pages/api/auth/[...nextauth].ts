@@ -30,11 +30,12 @@ export const authOptions: AuthOptions = {
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
         const { email, password } = credentials as any;
+        await dbConnect();
         const user = await userModal.findOne({
           email: email,
           password: password,
         });
-        console.log('users',user)
+        console.log("users", user);
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
           return user;
@@ -50,9 +51,9 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: "/login",
   },
-  session:{
-    strategy:"jwt"
-  }
+  session: {
+    strategy: "jwt",
+  },
 };
 
 export default NextAuth(authOptions);
