@@ -27,7 +27,7 @@ const Login = ({ providers }: { providers: any }) => {
                     } catch (error: any) {
                         console.log(error)
 
-                        alert(error.response.data.msg)
+                        alert(error?.message)
                     }
                 }}
                 initialValues={{
